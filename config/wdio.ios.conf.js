@@ -11,7 +11,9 @@ config.port = 4723;
 // ============
 // Specs
 // ============
-config.specs = [path.join(process.cwd(), "./test/specs/ios-findElements.js")];
+config.specs = [
+  path.join(process.cwd(), "./test/specs/ios-findElements.spec.js"),
+];
 
 //
 // ============
