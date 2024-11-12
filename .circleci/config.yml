@@ -8,6 +8,15 @@ jobs:
       IOS_VERSION: 16.4
       DEVICE_NAME: iPhone 14 Pro
     steps:
+      - run:
+          name: Install Rosetta 2
+          command: |
+            if /usr/sbin/softwareupdate --install-rosetta --agree-to-license; then
+              echo "Rosetta installed successfully or already present"
+            else
+              echo "Rosetta installation failed"
+              exit 1
+            fi
       - checkout
       - run:
           name: Install nvm
