@@ -55,10 +55,11 @@ describe("iOS Find Element", () => {
   it.only("Exercise: Enter text in the search field", async () => {
     await $("~Search").click();
     await $("~Default").click();
-    await $("//XCUIElementTypeSearchField").addValue("I love this course!");
-    await expect($("//XCUIElementTypeSearchField")).toHaveAttribute(
-      "I love this course!"
-    );
+    await $("//XCUIElementTypeSearchField").addValue("I love India!");
+    await expect($("//XCUIElementTypeSearchField")).toHaveAttribute("value");
+
+    const text = await $("//XCUIElementTypeSearchField").getText();
+    expect(text).toBe("I love India!");
 
     await $("~Clear text").click();
     await expect($("//XCUIElementTypeSearchField")).not.toHaveAttr("value");
