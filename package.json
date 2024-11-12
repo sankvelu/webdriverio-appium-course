@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "@wdio/cli": "^7.14.1",
-    "appium": "^2.0.0-beta.18",
+    "appium": "^2.12.0",
+    "appium-uiautomator2-driver": "^3.8.0",
+    "appium-xcuitest-driver": "^7.28.3",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {

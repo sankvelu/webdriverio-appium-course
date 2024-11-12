@@ -20,7 +20,7 @@ config.specs = [path.join(process.cwd(), "./test/specs/ios-findElements.js")];
 config.capabilities = [
   {
     platformName: "ios",
-    "appium:platformVersion": "16.0",
+    "appium:platformVersion": "16.4",
     "appium:deviceName": "iPhone 14 Pro",
     "appium:automationName": "XCUITest",
     "appium:app": path.join(process.cwd(), "app/ios/UIKitCatalog.app"),
