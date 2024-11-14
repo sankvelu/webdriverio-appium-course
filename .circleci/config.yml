@@ -45,7 +45,66 @@ jobs:
             appium -p 4723 &
             sleep 10
             npx wdio config/wdio.ios.conf.js
-
+  android:
+    macos: # indicate that we are using the macOS executor
+      xcode: 14.3.1
+    environment:
+      JAVA_HOME: /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+      ANDROID_SDK_ROOT: /usr/local/Caskroom/android-sdk/4333796
+    steps:
+      - checkout
+      - run: npm install -g react-native-cli
+      - run: |
+          brew install --cask homebrew/cask-versions/adoptopenjdk8
+          brew install gradle
+          brew install android-sdk
+          brew install android-platform-tools
+          brew install --cask intel-haxm
+      - run: |
+          export PATH=$JAVA_HOME/bin:$PATH
+          echo "y" | sdkmanager --install 'system-images;android-28;google_apis;x86_64'
+          echo "no" | avdmanager create avd -n test_device -k 'system-images;android-28;google_apis;x86_64' --force
+          emulator -list-avds
+          ls -la /Users/$USER/.android/avd
+          sdkmanager "platform-tools" "platforms;android-28"
+      - run:
+          name: Starting emulator in background
+          command: export ANDROID_AVD_HOME=/Users/$USER/.android/avd && export ANDROID_HOME=$ANDROID_SDK_ROOT && $ANDROID_HOME/emulator/emulator -avd test_device -skin 1080x1920 -memory 1024 -engine qemu2 -netfast -no-audio -no-snapshot -accel on
+          background: true
+      - run: |
+          adb wait-for-device
+          adb devices
+          echo "Emulator started"
+      - run: |
+          rm -rf node_modules
+          npm cache clean --force
+          rm -rf package-lock.json
+      - run: npm install --save-dev
+      - run: npm audit fix
+      - run: npm install --save-dev chai
+      - run:
+          name: Starting metro in background
+          command: npm start --reset-cache &> metro-android.log
+          background: true
+      - run: |
+          react-native run-android &> build-android.log
+          sleep 30
+      - run:
+          name: Run E2E Tests - Android
+          command: npm run e2e-test:android -- Sanity &> test-execution-console-android.log
+          no_output_timeout: 30m
+      - store_artifacts:
+          path: metro-android.log
+          destination: metro-android.log
+      - store_artifacts:
+          path: build-android.log
+          destination: build-android.log
+      - store_artifacts:
+          path: test-execution-console-android.log
+          destination: test-execution-console-android.log
+      - store_artifacts:
+          path: __tests__/e2e/test-results
+          destination: test-results-android
 workflows:
   build_and_test:
     jobs:
