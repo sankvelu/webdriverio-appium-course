@@ -48,6 +48,8 @@ jobs:
           adb devices
           echo "Emulator started"
       - run: |
+          node -v 
+          npm -v
           npm install -g appium
           appium -v
           appium -p 4723 &
