@@ -48,6 +48,9 @@ jobs:
   android:
     macos: # indicate that we are using the macOS executor
       xcode: 14.3.1
+    environment:
+      IOS_VERSION: 16.4
+      DEVICE_NAME: iPhone 14 Pro
     steps:
       - checkout
       - run:
