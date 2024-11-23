@@ -44,3 +44,7 @@ ios:
             sleep 10
             npx wdio config/wdio.ios.conf.js
 */
+
+// AWS_ACCESS_KEY_ID = AKIARHJJM6MRNKEXQJE5;
+// AWS_SECRET_ACCESS_KEY = hFiGqL3SWSesaBad + RtwpR8rHhniVW / QK94lH1CG;
+// AWS_DEFAULT_REGION = eu - north - 1;
