@@ -59,7 +59,7 @@ describe("iOS Find Element", () => {
     await expect($("//XCUIElementTypeSearchField")).toHaveAttribute("value");
 
     const text = await $("//XCUIElementTypeSearchField").getText();
-    expect(text).toBe("I love Russia!");
+    expect(text).toBe("I love India!");
 
     await $("~Clear text").click();
     await expect($("//XCUIElementTypeSearchField")).not.toHaveAttr("value");
